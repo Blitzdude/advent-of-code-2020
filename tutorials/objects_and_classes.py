@@ -1,3 +1,5 @@
+# https://pythonspot.com/objects-and-classes/
+
 class User:
     name = ""
 
