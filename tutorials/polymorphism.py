@@ -44,7 +44,7 @@ class Word(Document):
         return "Show word contents!"
 
 
-documents = [Pdf("Document1")], Pdf("Document2"), Word("Document3")
+documents = [Pdf("Document1"), Pdf("Document2"), Word("Document3")]
 
 for doc in documents:
-    print(doc.name)
+    print(doc.name + ": " + doc.show())
