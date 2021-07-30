@@ -41,3 +41,9 @@ xSuperSet = {"a","b","c","d"}
 ySubSet = {"c","d"}
 print(xSuperSet.issuperset(ySubSet))
 print(ySubSet.issuperset(xSuperSet))
+
+# Intersection - set.intersection(other) returns all variables in both sets
+xIntersect = {"a","b","c","d","e"}
+yIntersect = {"c","d"}
+print( xIntersect.intersection(yIntersect))
+
