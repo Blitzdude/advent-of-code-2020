@@ -13,3 +13,11 @@ else:
 for line in contents:
     print(line)
 
+# socratica
+try:
+    with open(filename) as fileobj:
+        text = fileobj.read()
+except FileNotFoundError:
+    text = None
+
+print(contents)
