@@ -54,7 +54,7 @@ def day1(puzzleInput):
 
         return num1 * num2
 
-def day2(puzzleInput):
+def day1_part2(puzzleInput):
     if (puzzleInput == None):
         print("Error puzzle input cannot be None")
     else: 
@@ -87,8 +87,8 @@ def readPuzzleInput(filepath):
     return(puzzleInput)
 
 if __name__ == "__main__":
-    puzzleInput = readPuzzleInput(sys.argv[1])
+    puzzleInput = readPuzzleInput("./puzzleInput.txt")
     day1_result = day1(puzzleInput)
     print("day1: " + str(day1_result))
-    day2_result = day2(puzzleInput)
+    day2_result = day1_part2(puzzleInput)
     print("day2: " + str(day2_result))
