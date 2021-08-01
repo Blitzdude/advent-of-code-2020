@@ -13,6 +13,23 @@ def day2(puzzleInput):
 
     return number_of_valid_passwords
 
+def day2_part2(puzzleInput):
+    number_of_valid_passwords = 0
+    for line in puzzleInput:
+        positions, letter, password = line.split()
+        first, second = positions.split("-")
+        idx1, idx2 = int(first)-1, int(second)-1
+        letter = letter.replace(":", "")
+
+        if (letter == password[idx1]):
+            if (letter != password[idx2]):
+                number_of_valid_passwords += 1
+        elif (letter == password[idx2]):
+            if (letter != password[idx1]):
+                number_of_valid_passwords += 1
+
+    return number_of_valid_passwords
+
 
 def readPuzzleInput(filepath):
     puzzleInput = []
@@ -30,3 +47,4 @@ def readPuzzleInput(filepath):
 if __name__ == "__main__":
     input = readPuzzleInput("day2/puzzleInput.txt")
     print(day2(input))
+    print(day2_part2(input))
