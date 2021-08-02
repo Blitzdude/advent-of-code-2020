@@ -1,5 +1,7 @@
 # https://adventofcode.com/2020/day/2
 
+from libs.common import readPuzzleInput
+
 def day2(puzzleInput):
     number_of_valid_passwords = 0
     for line in puzzleInput:
@@ -30,21 +32,7 @@ def day2_part2(puzzleInput):
 
     return number_of_valid_passwords
 
-
-def readPuzzleInput(filepath):
-    puzzleInput = []
-    try:
-        with open(filepath, "r") as file:
-            lines = file.readlines()
-            puzzleInput = list(map(lambda x : x.replace("\n", ""), lines))
-    except FileNotFoundError:
-        print("Error: File not found")
-        puzzleInput = None
-
-    return(puzzleInput)
-
-
 if __name__ == "__main__":
-    input = readPuzzleInput("day2/puzzleInput.txt")
+    input = readPuzzleInput("puzzleInput/day2.txt")
     print(day2(input))
     print(day2_part2(input))

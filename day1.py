@@ -35,8 +35,7 @@ Of course, your expense report is much larger. Find the two entries that sum to 
 
 Your puzzle answer was 842016.
 '''
-import sys
-
+from libs.common import readPuzzleInput 
 def day1(puzzleInput):
     if (puzzleInput == None):
         print("Error puzzle input cannot be None")
@@ -74,21 +73,10 @@ def day1_part2(puzzleInput):
 
         return num1 * num2 * num3
 
-def readPuzzleInput(filepath):
-    puzzleInput = []
-    try:
-        with open(filepath, "r") as file:
-            lines = file.readlines()
-            puzzleInput = list(map(lambda x : x.replace("\n", ""), lines))
-    except FileNotFoundError:
-        print("Error: File not found")
-        puzzleInput = None
-
-    return(puzzleInput)
 
 if __name__ == "__main__":
-    puzzleInput = readPuzzleInput("./puzzleInput.txt")
+    puzzleInput = readPuzzleInput("puzzleInput/day1.txt")
     day1_result = day1(puzzleInput)
     print("day1: " + str(day1_result))
     day2_result = day1_part2(puzzleInput)
-    print("day2: " + str(day2_result))
+    print("day1 part2: " + str(day2_result))
