@@ -10,6 +10,17 @@ def readPuzzleInput(filepath):
 
     return(puzzleInput)
 
+def readPuzzleInputAsString(filepath):
+    puzzleInput = ""
+    try:
+        with open(filepath, "r") as file:
+            puzzleInput = file.read()
+    except FileNotFoundError:
+        print("Error: File not found")
+        puzzleInput = None
+
+    return(puzzleInput)
+
 def replaceCharAtIndex(orgStr, index, replacement):
     ''' Replace character at index in string org_str with the
     given replacement character.'''
