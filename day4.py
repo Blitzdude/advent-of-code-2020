@@ -133,18 +133,18 @@ class Validator:
         return has_all_fields
 
     def __validateBirthYear(self, value):
-        if (not is_in_range(value, self.validation_rules["byr"]["min"], self.validation_rules["byr"]["max"])):
-            return False
-        return True
+        if (is_in_range(value, self.validation_rules["byr"]["min"], self.validation_rules["byr"]["max"])):
+            return True
+        return False
 
     def __validateIssueYear(self, value):
-        if (not is_in_range(value, self.validation_rules["iyr"]["min"], self.validation_rules["iyr"]["max"])):
-            return False
-        return True
+        if (is_in_range(value, self.validation_rules["iyr"]["min"], self.validation_rules["iyr"]["max"])):
+            return True
+        return False
 
     def __validateExpirationYear(self, value):
-        if (not is_in_range(value, self.validation_rules["eyr"]["min"], self.validation_rules["eyr"]["max"])):
-            return False
+        if (is_in_range(value, self.validation_rules["eyr"]["min"], self.validation_rules["eyr"]["max"])):
+            return True
         return False
 
     def __validateHeight(self, value):
@@ -163,8 +163,9 @@ class Validator:
         return True
 
     def __validatePersonalId(self, value):
-        if (not value.isnumeric() and len(value) != self.validation_rules["pid"]["length"]):
-            field_is_valid = False
+        if (value.isnumeric() and len(value) == self.validation_rules["pid"]["length"]):
+            return True
+        return False
     
 
 def doValidation(field_type, value):
@@ -220,8 +221,25 @@ def check_height(value, rule_dict):
         return True
 
 if __name__ == "__main__":
-    part1 = day4(readPuzzleInputAsString("puzzleInput/day4.txt"))
-    print(part1)
-    part2 = day4_part2(readPuzzleInputAsString("puzzleInput/day4.txt"))
-    print(part2)
-    
+    # part1 = day4(readPuzzleInputAsString("puzzleInput/day4.txt"))
+    # print(part1)
+    # part2 = day4_part2(readPuzzleInputAsString("puzzleInput/day4.txt"))
+    # print(part2)
+    validator = Validator()
+    # valid
+    print(validator.validateField("byr", 2002))
+    print(validator.validateField("hgt", "60in"))
+    print(validator.validateField("iyr", 2020))
+    print(validator.validateField("eyr", 2030))
+    print(validator.validateField("hcl", "#123abc"))
+    print(validator.validateField("ecl", "brn"))
+    print(validator.validateField("pid", "000000001"))
+
+    # invalid
+    print(validator.validateField("byr", 2003))
+    print(validator.validateField("hgt", "194in"))
+    print(validator.validateField("iyr", 2021))
+    print(validator.validateField("eyr", 2031))
+    print(validator.validateField("hcl", "123abc"))
+    print(validator.validateField("ecl", "asd"))
+    print(validator.validateField("pid", "0123456789"))

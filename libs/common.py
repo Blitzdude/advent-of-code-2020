@@ -31,7 +31,7 @@ def replaceCharAtIndex(orgStr, index, replacement):
 
 def is_in_range(value, min, max):
     try:
-        return (value < min and value > max)
+        return (value >= min and value <= max)
     except ValueError:
         return False
     except TypeError:
