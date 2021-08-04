@@ -157,27 +157,7 @@ class Validator:
         return False
 
 if __name__ == "__main__":
-    part1 = day4(readPuzzleInputAsString("puzzleInput/day4_test.txt"))
+    part1 = day4(readPuzzleInputAsString("puzzleInput/day4.txt"))
     print(part1)
-    part2 = day4_part2(readPuzzleInputAsString("puzzleInput/day4_test.txt"))
+    part2 = day4_part2(readPuzzleInputAsString("puzzleInput/day4.txt"))
     print(part2)
-    # validator = Validator()
-    # print(validator.hasAllFields(["pid:860033327", "eyr:2020", "hcl:#fffffd", "byr:1937", "iyr:2017", "hgt:183cm"]))
-
-    # # valid
-    # print(validator.validateField("byr", 2002))
-    # print(validator.validateField("hgt", "60in"))
-    # print(validator.validateField("iyr", 2020))
-    # print(validator.validateField("eyr", 2030))
-    # print(validator.validateField("hcl", "#123abc"))
-    # print(validator.validateField("ecl", "brn"))
-    # print(validator.validateField("pid", "000000001"))
-
-    # # invalid
-    # print(validator.validateField("byr", 2003))
-    # print(validator.validateField("hgt", "194in"))
-    # print(validator.validateField("iyr", 2021))
-    # print(validator.validateField("eyr", 2031))
-    # print(validator.validateField("hcl", "123abc"))
-    # print(validator.validateField("ecl", "asd"))
-    # print(validator.validateField("pid", "0123456789"))
