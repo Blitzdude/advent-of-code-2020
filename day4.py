@@ -1,5 +1,6 @@
 # https://adventofcode.com/2020/day/4
 
+from os import truncate
 from libs.common import readPuzzleInputAsString, is_in_range
 
 def day4(puzzleInput):
@@ -21,7 +22,6 @@ def day4(puzzleInput):
             id_fields.add(id)
             val_fields.append(val)
 
-        passport_dict = dict(zip(id_fields, val_fields))
 
         # find differing values in sets
         missingFields = expectedFields.difference(id_fields)
@@ -33,16 +33,18 @@ def day4(puzzleInput):
     return valid_passports
 
 def day4_part2(puzzleInput):
+    validator = Validator
+
     valid_passports = list()
     expectedFields = {"byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid", "cid"}
-
+    num_valid_passports = 0
 
     # split passports from eachother
     passports = list(puzzleInput.split("\n\n"))
     # remove newlines from passport strings
     passports = list(map(lambda x: x.replace("\n", " "), passports))
 
-    # find passports that all fields (except cid)
+    # find passports that have all fields (except cid)
     for passport in passports:
         fields = passport.split()
         id_fields = set()
@@ -66,7 +68,104 @@ def day4_part2(puzzleInput):
     for valid_pass in valid_passports:
         pass_is_valid = True
         for field in valid_pass:
-            pass_is_valid = doValidation(field, valid_pass[field])
+            pass_is_valid = validator.validateField(field, valid_pass[field])
+        if pass_is_valid:
+            num_valid_passports += 1
+
+    return num_valid_passports
+
+class Validator:
+    expectedFields = set()
+    validation_rules = dict()
+
+    def __init__(self):
+        self.expectedFields = {"byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid", "cid"}
+        
+        self.validation_rules = {
+            "byr": {"min": 1920, "max": 2002},
+            "iyr": {"min": 2010, "max": 2020},
+            "eyr": {"min": 2020, "max": 2030},
+            "hgt": {"cm": {"min": 150, "max": 193}, "in": {"min":59, "max":76}},
+            "hcl": {"length": 7},
+            "ecl": {"amb", "blu", "brn", "gry", "grn", "hzl", "oth"},
+            "pid": {"length": 9}
+            }
+
+    def validateField(self, field, value):
+
+        if field == "byr":
+            return self.__validateBirthYear(value)
+        elif field == "iyr":
+            return self.__validateIssueYear(value)
+        elif field == "eyr":
+            return self.__validateExpirationYear(value)
+        elif field == "hgt":
+            return self.__validateHeight(value)
+        elif field == "hcl":
+            return self.__validateHairColor(value)
+        elif field == "ecl":
+            return self.__validateEyeColor(value)
+        elif field == "pid":
+            return self.__validatePersonalId(value)
+        else:
+            return False
+
+    def hasAllFields(self, fields):
+        '''
+        Validates that fields object has all the needed values
+
+        fields (list): list of fields found on passport
+        '''
+        has_all_fields = False
+        id_fields = set()
+        
+        for field in fields:
+            id, val = field.split(":")
+            id_fields.add(id)
+
+        # find differing values in sets
+        missingFields = self.expectedFields.difference(id_fields)
+        if (len(missingFields) == 0):
+            has_all_fields = True
+        elif (len(missingFields) == 1 and missingFields.pop() == "cid"):
+            has_all_fields = True
+
+        return has_all_fields
+
+    def __validateBirthYear(self, value):
+        if (not is_in_range(value, self.validation_rules["byr"]["min"], self.validation_rules["byr"]["max"])):
+            return False
+        return True
+
+    def __validateIssueYear(self, value):
+        if (not is_in_range(value, self.validation_rules["iyr"]["min"], self.validation_rules["iyr"]["max"])):
+            return False
+        return True
+
+    def __validateExpirationYear(self, value):
+        if (not is_in_range(value, self.validation_rules["eyr"]["min"], self.validation_rules["eyr"]["max"])):
+            return False
+        return False
+
+    def __validateHeight(self, value):
+        return check_height(value, self.validation_rules["hgt"])
+
+    def __validateHairColor(self, value):
+        if (len(value) != self.validation_rules["hcl"]["length"]):
+            return False
+        if (value[0] != "#"):
+            return False
+        return True
+        
+    def __validateEyeColor(self, value):
+        if (value not in self.validation_rules["ecl"]):
+            return False
+        return True
+
+    def __validatePersonalId(self, value):
+        if (not value.isnumeric() and len(value) != self.validation_rules["pid"]["length"]):
+            field_is_valid = False
+    
 
 def doValidation(field_type, value):
     validation_rules = {
@@ -104,8 +203,6 @@ def doValidation(field_type, value):
         if (not value.isnumeric() and len(value) != validation_rules["pid"]["length"]):
             field_is_valid = False
 
-    if (field_is_valid == False):
-        print(field_type, value)
     return field_is_valid
 
 def check_height(value, rule_dict):
@@ -123,6 +220,8 @@ def check_height(value, rule_dict):
         return True
 
 if __name__ == "__main__":
-    # part1 = day4(readPuzzleInputAsString("puzzleInput/day4.txt"))
-    # print(part1)
-    day4_part2(readPuzzleInputAsString("puzzleInput/day4.txt"))
+    part1 = day4(readPuzzleInputAsString("puzzleInput/day4.txt"))
+    print(part1)
+    part2 = day4_part2(readPuzzleInputAsString("puzzleInput/day4.txt"))
+    print(part2)
+    
