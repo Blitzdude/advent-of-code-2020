@@ -102,21 +102,23 @@ class Validator:
             return self.__validateEyeColor(value)
         elif field == "pid":
             return self.__validatePersonalId(value)
+        elif field == "cid":
+            return True
         else:
             return False
 
     def __validateBirthYear(self, value):
-        if (is_in_range(value, self.validation_rules["byr"]["min"], self.validation_rules["byr"]["max"])):
+        if (is_in_range(int(value), self.validation_rules["byr"]["min"], self.validation_rules["byr"]["max"])):
             return True
         return False
 
     def __validateIssueYear(self, value):
-        if (is_in_range(value, self.validation_rules["iyr"]["min"], self.validation_rules["iyr"]["max"])):
+        if (is_in_range(int(value), self.validation_rules["iyr"]["min"], self.validation_rules["iyr"]["max"])):
             return True
         return False
 
     def __validateExpirationYear(self, value):
-        if (is_in_range(value, self.validation_rules["eyr"]["min"], self.validation_rules["eyr"]["max"])):
+        if (is_in_range(int(value), self.validation_rules["eyr"]["min"], self.validation_rules["eyr"]["max"])):
             return True
         return False
 
