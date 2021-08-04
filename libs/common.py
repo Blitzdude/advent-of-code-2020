@@ -28,3 +28,11 @@ def replaceCharAtIndex(orgStr, index, replacement):
     if index < len(orgStr):
         newStr = orgStr[0:index] + replacement + orgStr[index + 1:]
     return newStr
+
+def is_in_range(value, min, max):
+    try:
+        return (value < min and value > max)
+    except ValueError:
+        return False
+    except TypeError:
+        return False
