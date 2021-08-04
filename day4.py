@@ -1,6 +1,5 @@
 # https://adventofcode.com/2020/day/4
 
-from os import truncate
 from libs.common import readPuzzleInputAsString, is_in_range
 
 def day4(puzzleInput):
@@ -110,27 +109,27 @@ class Validator:
         else:
             return False
 
-    def hasAllFields(self, fields):
+    def hasAllFields(self, passport):
         '''
         Validates that fields object has all the needed values
 
-        fields (list): list of fields found on passport
+        passport (list): passport contains checkable fields
         '''
-        has_all_fields = False
+        
         id_fields = set()
         
-        for field in fields:
-            id, val = field.split(":")
+        for field in passport:
+            id = field.split(":")[0]
             id_fields.add(id)
 
         # find differing values in sets
         missingFields = self.expectedFields.difference(id_fields)
         if (len(missingFields) == 0):
-            has_all_fields = True
+            return True
         elif (len(missingFields) == 1 and missingFields.pop() == "cid"):
-            has_all_fields = True
+            return True
 
-        return has_all_fields
+        return False
 
     def __validateBirthYear(self, value):
         if (is_in_range(value, self.validation_rules["byr"]["min"], self.validation_rules["byr"]["max"])):
@@ -226,20 +225,22 @@ if __name__ == "__main__":
     # part2 = day4_part2(readPuzzleInputAsString("puzzleInput/day4.txt"))
     # print(part2)
     validator = Validator()
-    # valid
-    print(validator.validateField("byr", 2002))
-    print(validator.validateField("hgt", "60in"))
-    print(validator.validateField("iyr", 2020))
-    print(validator.validateField("eyr", 2030))
-    print(validator.validateField("hcl", "#123abc"))
-    print(validator.validateField("ecl", "brn"))
-    print(validator.validateField("pid", "000000001"))
+    print(validator.hasAllFields(["pid:860033327", "eyr:2020", "hcl:#fffffd", "byr:1937", "iyr:2017", "hgt:183cm"]))
 
-    # invalid
-    print(validator.validateField("byr", 2003))
-    print(validator.validateField("hgt", "194in"))
-    print(validator.validateField("iyr", 2021))
-    print(validator.validateField("eyr", 2031))
-    print(validator.validateField("hcl", "123abc"))
-    print(validator.validateField("ecl", "asd"))
-    print(validator.validateField("pid", "0123456789"))
+    # # valid
+    # print(validator.validateField("byr", 2002))
+    # print(validator.validateField("hgt", "60in"))
+    # print(validator.validateField("iyr", 2020))
+    # print(validator.validateField("eyr", 2030))
+    # print(validator.validateField("hcl", "#123abc"))
+    # print(validator.validateField("ecl", "brn"))
+    # print(validator.validateField("pid", "000000001"))
+
+    # # invalid
+    # print(validator.validateField("byr", 2003))
+    # print(validator.validateField("hgt", "194in"))
+    # print(validator.validateField("iyr", 2021))
+    # print(validator.validateField("eyr", 2031))
+    # print(validator.validateField("hcl", "123abc"))
+    # print(validator.validateField("ecl", "asd"))
+    # print(validator.validateField("pid", "0123456789"))
