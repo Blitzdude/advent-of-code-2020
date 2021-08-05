@@ -29,16 +29,14 @@ def day6_part2(puzzleInput):
     groups = list(puzzleInput.split("\n\n"))
     # remove newlines from passport strings
     num_answers = 0
-    for group_answers in groups:
+    for idx, group_answers in enumerate(groups):
         # group answers join them together as string
-        answer_str = "".join(map(str, list(group_answers.split("\n"))))
-        
-        # convert string to set all element in set are unique
-        answer_set = set(answer_str)
-        print(answer_set)
+        print("Group: " + " " + str(idx+1))
+        answers_list = group_answers.split("\n")
+        print(answers_list)
 
     return num_answers
 
 if __name__ == "__main__":
-    result = day6(readPuzzleInputAsString("puzzleInput/day6.txt"))
+    result = day6_part2(readPuzzleInputAsString("puzzleInput/day6_test.txt"))
     print(result)
