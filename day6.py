@@ -3,6 +3,8 @@
 from libs.common import readPuzzleInputAsString
 
 def day6(puzzleInput):
+    # each group contains x number of people with answers
+    # count how many unique answers are in group and sum them up
 
     # split groups from each other
     groups = list(puzzleInput.split("\n\n"))
@@ -19,7 +21,24 @@ def day6(puzzleInput):
 
     return num_answers
 
+def day6_part2(puzzleInput):
+    # each group contains x number of people with answers
+    # count how many questions in a group was answered by ALL members
+
+    # split groups from each other
+    groups = list(puzzleInput.split("\n\n"))
+    # remove newlines from passport strings
+    num_answers = 0
+    for group_answers in groups:
+        # group answers join them together as string
+        answer_str = "".join(map(str, list(group_answers.split("\n"))))
+        
+        # convert string to set all element in set are unique
+        answer_set = set(answer_str)
+        print(answer_set)
+
+    return num_answers
+
 if __name__ == "__main__":
     result = day6(readPuzzleInputAsString("puzzleInput/day6.txt"))
     print(result)
-    pass
